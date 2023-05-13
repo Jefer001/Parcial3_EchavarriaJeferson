@@ -12,10 +12,7 @@ namespace WashingCar.DAL.Entities
         public string? Name { get; set; }
 
         [Display(Name = "Vehiculo")]
-        public Vehicle Vehicle { get; set; }
-
-        [Display(Name = "Usuarios")]
-        public ICollection<User> Users { get; set; }
+        public Vehicle? Vehicle { get; set; }
         #endregion
     }
 }
