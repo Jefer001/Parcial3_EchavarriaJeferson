@@ -1,9 +1,31 @@
+using Microsoft.EntityFrameworkCore;
+using WashingCar.DAL;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDbContext<DataBaseContext>(
+    o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+//Builder para llamar la clase SeederDB.cs
+builder.Services.AddTransient<Seeder>();
+
 var app = builder.Build();
+
+SeederData();
+
+void SeederData()
+{
+    IServiceScopeFactory? scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+
+    using (IServiceScope? scope = scopedFactory.CreateScope())
+    {
+        Seeder? service = scope.ServiceProvider.GetService<Seeder>();
+        service.SeedAsync().Wait();
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
