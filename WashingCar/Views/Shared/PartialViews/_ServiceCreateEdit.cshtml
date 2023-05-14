@@ -1,0 +1,13 @@
+﻿@model WashingCar.DAL.Entities.Service
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="input-group mb-3">
+        <label asp-for="Name" class="input-group-text"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="input-group mb-3">
+        <label asp-for="Price" class="input-group-text"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
