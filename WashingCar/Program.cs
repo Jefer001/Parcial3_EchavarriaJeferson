@@ -30,6 +30,12 @@ builder.Services.AddIdentity<User, IdentityRole>(io =>
     io.Password.RequiredLength = 6;
 }).AddEntityFrameworkStores<DataBaseContext>();
 
+builder.Services.ConfigureApplicationCookie(option =>
+{
+    option.LoginPath = "/Account/notauthorized";
+    option.AccessDeniedPath = "/account/notauthorized";
+});
+
 var app = builder.Build();
 
 SeederData();
@@ -53,11 +59,13 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseStatusCodePagesWithReExecute("/error/{0}");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();//Autenticar usuario
 app.UseAuthorization();
 
 app.MapControllerRoute(
