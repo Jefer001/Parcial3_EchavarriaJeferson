@@ -66,7 +66,7 @@ namespace WashingCar.Controllers
                 catch (DbUpdateException dbUpdateException)
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
-                        ModelState.AddModelError(string.Empty, "Ya existe un vehiculo con el mismo nombre.");
+                        ModelState.AddModelError(string.Empty, "Ya existe un vehiculo con la mismo número de placa.");
                     else
                         ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
                 }
@@ -147,11 +147,6 @@ namespace WashingCar.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool VehicleExists(Guid id)
-        {
-            return _context.Vehicles.Any(e => e.Id == id);
         }
         #endregion
     }

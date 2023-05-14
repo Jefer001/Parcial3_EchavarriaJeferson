@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using WashingCar.DAL.Entities;
 
 namespace WashingCar.DAL
 {
-    public class DataBaseContext : DbContext
+    public class DataBaseContext : IdentityDbContext<User>
     {
         #region Builder
         public DataBaseContext(DbContextOptions<DataBaseContext> option) : base(option)

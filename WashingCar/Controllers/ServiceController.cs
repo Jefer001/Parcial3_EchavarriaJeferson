@@ -24,6 +24,7 @@ namespace WashingCar.Controllers
         {
             return _context.Services != null ?
                         View(await _context.Services
+                        .Include(s => s.Vehicles)
                         .ToListAsync()) :
                         Problem("Entity set 'DataBaseContext.Services'  is null.");
         }
@@ -63,7 +64,7 @@ namespace WashingCar.Controllers
                 catch (DbUpdateException dbUpdateException)
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
-                        ViewBag.ErrorMessage("Ya existe un servicio con el mismo nombre.");
+                        ModelState.AddModelError(string.Empty, "Ya existe un servicio con el mismo nombre.");
                     else
                         ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
                 }
