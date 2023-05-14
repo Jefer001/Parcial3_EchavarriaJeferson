@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using WashingCar.DAL.Entities;
 
 namespace WashingCar.DAL
 {
-    public class DataBaseContext : IdentityDbContext
+    public class DataBaseContext : DbContext
     {
         #region Builder
         public DataBaseContext(DbContextOptions<DataBaseContext> option) : base(option)
@@ -22,8 +21,8 @@ namespace WashingCar.DAL
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Service>().HasIndex(s => s.Name).IsUnique();
-            modelBuilder.Entity<Vehicle>().HasIndex(v => v.Name).IsUnique();
-            modelBuilder.Entity<VehicleDetail>().HasIndex("Name", "CountryId").IsUnique();
+            modelBuilder.Entity<Vehicle>().HasIndex("Name", "ServiceId").IsUnique();
+            modelBuilder.Entity<VehicleDetail>().HasIndex("Name", "VehicleId").IsUnique();
         }
     }
 }

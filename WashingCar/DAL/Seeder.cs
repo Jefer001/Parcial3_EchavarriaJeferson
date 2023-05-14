@@ -20,18 +20,18 @@ namespace WashingCar.DAL
         {
             await _context.Database.EnsureCreatedAsync();
 
-            await PopulateServicesAsync();
+            PopulateServices();
 
             await _context.SaveChangesAsync();
         }
         #endregion
 
         #region Private methods
-        private async Task PopulateServicesAsync()
+        private void PopulateServices()
         {
             if (!_context.Services.Any())
             {
-                _context.Services.Add(new Service { Name = "Lavada simple", Price = 25000});
+                _context.Services.Add(new Service { Name = "Lavada simple", Price = 25000 });
                 _context.Services.Add(new Service { Name = "Lavada + Polishada", Price = 50000 });
                 _context.Services.Add(new Service { Name = "Lavada + Aspirada de Cojinería", Price = 30000 });
                 _context.Services.Add(new Service { Name = "Lavada Full", Price = 65000 });

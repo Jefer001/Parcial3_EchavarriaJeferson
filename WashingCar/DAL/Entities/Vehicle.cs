@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
 
 namespace WashingCar.DAL.Entities
 {
@@ -10,6 +9,12 @@ namespace WashingCar.DAL.Entities
         [MaxLength(50)]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string? Name { get; set; }
+
+        [Display(Name = "Propietario")]
+        public string? Owner { get; set; }
+
+        [Display(Name = "Número de Placa")]
+        public string? NumberPlate { get; set; }
 
         [Display(Name = "Servicio.")]
         public Service? Service { get; set; }
