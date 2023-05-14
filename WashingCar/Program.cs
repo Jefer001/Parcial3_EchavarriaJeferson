@@ -19,6 +19,12 @@ builder.Services.AddTransient<Seeder>();
 //Builder para llamar la interfaz IUserHerper.cs
 builder.Services.AddScoped<IUserHelper, UserHelper>();
 
+//Builder para llamar la interfaz IDroDownListhelper.cs
+builder.Services.AddScoped<IDropDownListHelper, DropDownListHelper>();
+
+//Builder para llamar la interfaz IAzureStorageHelper.cs
+builder.Services.AddScoped<IAzureBlobHelper, AzureBlobHelper>();
+
 builder.Services.AddIdentity<User, IdentityRole>(io =>
 {
     io.User.RequireUniqueEmail = true;
