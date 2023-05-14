@@ -12,7 +12,7 @@ using WashingCar.DAL;
 namespace WashingCar.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20230514112510_UserEntity")]
+    [Migration("20230514120757_UserEntity")]
     partial class UserEntity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
