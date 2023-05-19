@@ -1,0 +1,20 @@
+﻿@model WashingCar.DAL.Entities.Vehicle
+
+@{
+    ViewData["Title"] = "DeleteVehicle";
+}
+
+<h1>Eliminar vehículo</h1>
+
+<h3>¿Estás seguro que deseas eliminar este vehículo?</h3>
+<div>
+    <partial name="../Shared/PartialViews/_VehicleDetailDelete" />
+
+    <form asp-action="DeleteVehicle">
+
+        <input type="hidden" asp-for="Id" />
+
+        <input type="submit" asp-route-vehicleId="@Model?.Id" value="Eliminar" class="btn btn-outline-danger" />
+        <a asp-action="Details" asp-route-id="@Model?.Service.Id" class="btn btn-outline-success">Regresar</a>
+    </form>
+</div>

@@ -204,13 +204,13 @@ namespace WashingCar.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditVehicle(Guid? vehicleId)
+        public async Task<IActionResult> EditVehicle(Guid? VehicleId)
         {
-            if (vehicleId == null || _context.Vehicles == null) return NotFound();
+            if (VehicleId == null || _context.Vehicles == null) return NotFound();
 
             Vehicle vehicle = await _context.Vehicles
                 .Include(v => v.Service)
-                .FirstOrDefaultAsync(s => s.Id.Equals(vehicleId));
+                .FirstOrDefaultAsync(s => s.Id.Equals(VehicleId));
 
             if (vehicle == null) return NotFound();
 
@@ -219,6 +219,8 @@ namespace WashingCar.Controllers
                 ServiceId = vehicle.Service.Id,
                 Id = vehicle.Id,
                 Name = vehicle.Name,
+                Owner = vehicle.Owner,
+                NumberPlate = vehicle.NumberPlate,
                 CreationDate = vehicle.CreationDate
             };
             return View(vehicleViewModel);
@@ -262,52 +264,49 @@ namespace WashingCar.Controllers
             return View(vehicleViewModel);
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> DetailsState(Guid? stateId)
-        //{
-        //    if (stateId == null || _context.States == null) return NotFound();
+        [HttpGet]
+        public async Task<IActionResult> DetailsVehicle(Guid? VehicleId)
+        {
+            if (VehicleId == null || _context.Vehicles == null) return NotFound();
 
-        //    var state = await _context.States
-        //        .Include(c => c.Country)
-        //        .Include(c => c.Cities)
-        //        .FirstOrDefaultAsync(s => s.Id == stateId);
+            var vehicle = await _context.Vehicles
+                .Include(v => v.Service)
+                .FirstOrDefaultAsync(s => s.Id.Equals(VehicleId));
 
-        //    if (state == null) return NotFound();
+            if (vehicle == null) return NotFound();
 
-        //    return View(state);
-        //}
+            return View(vehicle);
+        }
 
-        //public async Task<IActionResult> DeleteState(Guid? stateId)
-        //{
-        //    if (stateId == null || _context.States == null) return NotFound();
+        public async Task<IActionResult> DeleteVehicle(Guid? vehicleId)
+        {
+            if (vehicleId == null || _context.Vehicles == null) return NotFound();
 
-        //    var state = await _context.States
-        //        .Include(c => c.Country)
-        //        .Include(c => c.Cities)
-        //        .FirstOrDefaultAsync(c => c.Id == stateId);
+            var vehicle = await _context.Vehicles
+                .Include(v => v.Service)
+                .FirstOrDefaultAsync(c => c.Id.Equals(vehicleId));
 
-        //    if (state == null) return NotFound();
+            if (vehicle == null) return NotFound();
 
-        //    return View(state);
-        //}
+            return View(vehicle);
+        }
 
-        //[HttpPost, ActionName("DeleteState")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteStateConfirmed(Guid stateId)
-        //{
-        //    if (_context.States == null) return Problem("Entity set 'DataBaseContext.State'  is null.");
+        [HttpPost, ActionName("DeleteVehicle")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteStateConfirmed(Guid vehicleId)
+        {
+            if (_context.Vehicles == null) return Problem("Entity set 'DataBaseContext.State'  is null.");
 
-        //    var state = await _context.States
-        //        .Include(c => c.Country)
-        //        .Include(c => c.Cities)
-        //        .FirstOrDefaultAsync(c => c.Id == stateId);
+            var vehicle = await _context.Vehicles
+                .Include(v => v.Service)
+                .FirstOrDefaultAsync(c => c.Id.Equals(vehicleId));
 
-        //    if (state != null) _context.States.Remove(state);
+            if (vehicle != null) _context.Vehicles.Remove(vehicle);
 
-        //    await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
-        //    return RedirectToAction(nameof(Details), new { id = state.Country.Id });
-        //}
+            return RedirectToAction(nameof(Details), new { id = vehicle.Service.Id });
+        }
         #endregion
     }
 }

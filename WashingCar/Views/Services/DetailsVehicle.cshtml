@@ -1,0 +1,22 @@
+﻿@model WashingCar.DAL.Entities.Vehicle
+
+@{
+    ViewData["Title"] = "DetailsVehicle";
+}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css" />
+
+<h1>Detalles</h1>
+
+<div>
+    <h4>Vehículo</h4>
+    <hr />
+    
+    <partial name="../Shared/PartialViews/_VehicleDetailDelete" />
+
+</div>
+<div>
+    <a asp-action="EditVehicle" asp-route-vehicleId="@Model?.Id" class="btn btn-outline-primary">Editar</a>
+    <a asp-action="DeleteVehicle" asp-route-vehicleId="@Model?.Id" class="btn btn-outline-warning">Eliminar servicio</a>
+    <a asp-action="Details" asp-route-id="@Model?.Service.Id" class="btn btn-outline-success">Regresar</a>
+</div>
