@@ -44,10 +44,6 @@ namespace WashingCar.Services
             return await _userManager.CreateAsync(user, password);
         }
 
-        public async Task<User> AddUserAsync(string email)
-        {
-            return await _context.Users.FindAsync(email);
-        }
 
         public async Task AddUserToRoleAsync(User user, string roleName)
         {

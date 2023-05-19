@@ -10,7 +10,7 @@ namespace WashingCar.DAL.Entities
         [Display(Name = "Servicio.")]
         [MaxLength(50)]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         [DisplayFormat(DataFormatString = "{0:C2}")]
@@ -18,8 +18,8 @@ namespace WashingCar.DAL.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public decimal Price { get; set; }
 
-        [Display(Name = "Vehicles")]
-        public ICollection<Vehicle>? Vehicles { get; set; }
+        [Display(Name = "Vehiculos")]
+        public ICollection<Vehicle> Vehicles { get; set; }
 
         [Display(Name = "Número de vehiculos")]
         public int VehicleNumber => Vehicles == null ? 0 : Vehicles.Count;

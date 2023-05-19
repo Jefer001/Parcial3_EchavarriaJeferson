@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WashingCar.DAL;
 using WashingCar.Helpers;
 using WashingCar.Models;
-using WashingCar.Services;
 
 namespace WashingCar.Controllers
 {
@@ -14,7 +12,7 @@ namespace WashingCar.Controllers
 
         #region Builder
         public AccountController(IUserHelper userHelper)
-        { 
+        {
             _userHelper = userHelper;
         }
         #endregion

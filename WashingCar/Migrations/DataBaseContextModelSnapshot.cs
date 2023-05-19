@@ -161,6 +161,12 @@ namespace WashingCar.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeliveryDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -245,6 +251,9 @@ namespace WashingCar.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("ServiceId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -274,15 +283,23 @@ namespace WashingCar.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeliveryDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("NumberPlate")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(6)
+                        .HasColumnType("nvarchar(6)");
 
                     b.Property<string>("Owner")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("ServiceId")
@@ -290,44 +307,12 @@ namespace WashingCar.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("NumberPlate")
+                        .IsUnique();
+
                     b.HasIndex("ServiceId");
 
-                    b.HasIndex("Name", "ServiceId")
-                        .IsUnique()
-                        .HasFilter("[ServiceId] IS NOT NULL");
-
                     b.ToTable("Vehicles");
-                });
-
-            modelBuilder.Entity("WashingCar.DAL.Entities.VehicleDetail", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DeliveryDat")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<Guid?>("VehicleId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("VehicleId");
-
-                    b.HasIndex("Name", "VehicleId")
-                        .IsUnique()
-                        .HasFilter("[VehicleId] IS NOT NULL");
-
-                    b.ToTable("VehicleDetails");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -390,23 +375,9 @@ namespace WashingCar.Migrations
                     b.Navigation("Service");
                 });
 
-            modelBuilder.Entity("WashingCar.DAL.Entities.VehicleDetail", b =>
-                {
-                    b.HasOne("WashingCar.DAL.Entities.Vehicle", "Vehicle")
-                        .WithMany("VehicleDetails")
-                        .HasForeignKey("VehicleId");
-
-                    b.Navigation("Vehicle");
-                });
-
             modelBuilder.Entity("WashingCar.DAL.Entities.Service", b =>
                 {
                     b.Navigation("Vehicles");
-                });
-
-            modelBuilder.Entity("WashingCar.DAL.Entities.Vehicle", b =>
-                {
-                    b.Navigation("VehicleDetails");
                 });
 #pragma warning restore 612, 618
         }

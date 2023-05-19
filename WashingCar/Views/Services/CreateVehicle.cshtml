@@ -1,0 +1,30 @@
+﻿@model WashingCar.Models.VehicleViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Crear</h1>
+
+<h4>Vehiculo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateVehicle">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ServiceId" />
+
+            <partial name="../Shared/PartialViews/_VehicleCreateEdit" />
+
+
+            <div class="form-group">
+                <input type="submit" value="Crear vehiculo" class="btn btn-primary" />
+                <a asp-action="Details" asp-route-id="@Model?.ServiceId" class="btn btn-outline-success">Regresar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

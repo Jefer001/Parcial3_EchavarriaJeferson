@@ -1,7 +1,6 @@
 ﻿using WashingCar.DAL.Entities;
 using WashingCar.Enum;
 using WashingCar.Helpers;
-using WashingCar.Services;
 
 namespace WashingCar.DAL
 {
@@ -27,8 +26,8 @@ namespace WashingCar.DAL
 
             PopulateServices();
             await PopulateRolesAsync();
-            await PopulateUserAsync("First Name Admin", "Last Name Role", "adminrole@yopmail.com", "Phone 3002323232", "Address Street Fighter", "Doc 102030", UserType.Admin);
-            await PopulateUserAsync("First Name User", "Last Name Role", "userrole@yopmail.com", "Phone 3502323232", "AddressStreet Fighter 2", "Doc 405060", UserType.User);
+            await PopulateUserAsync("Admin", "Last Name Role", "adminrole@yopmail.com", "Phone 3002323232", "Address Street Fighter", "Doc 102030", UserType.Admin);
+            await PopulateUserAsync("User", "Last Name Role", "userrole@yopmail.com", "Phone 3502323232", "AddressStreet Fighter 2", "Doc 405060", UserType.User);
 
             await _context.SaveChangesAsync();
         }

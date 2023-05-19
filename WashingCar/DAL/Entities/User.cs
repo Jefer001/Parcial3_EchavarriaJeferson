@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 using WashingCar.Enum;
+using WashingCar.Utilities;
 
 namespace WashingCar.DAL.Entities
 {
@@ -39,6 +40,11 @@ namespace WashingCar.DAL.Entities
 
         [Display(Name = "Tipo de usuario")]
         public UserType UserType { get; set; }
+
+        [Display(Name = "Servicio")]
+        [NonEmptyGuid(ErrorMessage = "Debes de seleccionar un Servicio.")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public Guid ServiceId { get; set; }
 
         //Propiedades de lectura
         [Display(Name = "Usuario")]

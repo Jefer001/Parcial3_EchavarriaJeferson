@@ -6,6 +6,8 @@
 
 <h1>Detalles</h1>
 
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css" />
+
 <div>
     <h4>Service</h4>
     <hr />
@@ -14,6 +16,90 @@
 
 </div>
 <div>
+    <a asp-action="CreateVehicle" asp-route-serviceId="@Model?.Id" class="btn btn-outline-warning">Vehiculo</a>
     <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-outline-warning">Editar</a>
     <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
 </div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Vehiculos</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover table-responsive table-striped" id="VehicleTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Vehicles.FirstOrDefault().Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Vehicles.FirstOrDefault().Owner)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Vehicles.FirstOrDefault().NumberPlate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Vehicles.FirstOrDefault().CreationDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Vehicles.FirstOrDefault().DeliveryDate)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var vehicles in Model.Vehicles)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => vehicles.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => vehicles.Owner)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => vehicles.NumberPlate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => vehicles.CreationDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => vehicles.DeliveryDate)
+                                </td>
+                                <td>
+                                    <a asp-action="EditVehicle" asp-route-stateId="@vehicles.Id" class="btn btn-outline-warning">Editar</a>
+                                    <a asp-action="DetailsVehicle" asp-route-stateId="@vehicles.Id" class="btn btn-outline-info">Detalles</a>
+                                    <a asp-action="DeleteVehicle" asp-route-stateId="@vehicles.Id" class="btn btn-outline-danger">Eliminar</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="//cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#VehicleTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                "aLengthMenu": 
+                [
+                    [5, 25, 50, 100, 200, -1],
+                    [5, 25, 50, 100, 200, "Todos"]
+                ]
+            });
+        });
+    </script>
+    }
