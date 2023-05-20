@@ -42,7 +42,7 @@ namespace WashingCar.Controllers
                 .FirstOrDefaultAsync(m => m.Id.Equals(id));
             if (service == null) return NotFound();
 
-            return View(service); ;
+            return View(service);
         }
 
         // GET: Services/Create
