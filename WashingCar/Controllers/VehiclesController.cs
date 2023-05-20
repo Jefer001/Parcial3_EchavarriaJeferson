@@ -29,6 +29,7 @@ namespace WashingCar.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Vehicles
+                .Include(v => v.Service)
                 .ToListAsync());
         }
 
@@ -57,14 +58,21 @@ namespace WashingCar.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Vehicle vehicle)
+        public async Task<IActionResult> Create(AddVehicleViewModel addVehicleViewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    vehicle.Id = Guid.NewGuid();
-                    vehicle.CreationDate = DateTime.Now;
+                    Vehicle vehicle = new()
+                    {
+                        CreationDate = DateTime.Now,
+                        Name = addVehicleViewModel.Name,
+                        Owner = addVehicleViewModel.Owner,
+                        NumberPlate = addVehicleViewModel.NumberPlate,
+                        Service = addVehicleViewModel.Service,
+                        DeliveryDate = null
+                    };
                     _context.Add(vehicle);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
@@ -81,7 +89,8 @@ namespace WashingCar.Controllers
                     ModelState.AddModelError(string.Empty, ex.Message);
                 }
             }
-            return View(vehicle);
+            addVehicleViewModel.Services = await _dropDownListHelper.GetDDLServicesAsync();
+            return View(addVehicleViewModel);
         }
 
         // GET: Vehicles/Edit/5
@@ -89,23 +98,44 @@ namespace WashingCar.Controllers
         {
             if (id == null || _context.Vehicles == null) return NotFound();
 
-            var vehicle = await _context.Vehicles.FindAsync(id);
+            var vehicle = await _context.Vehicles
+                .Include(v => v.Service)
+                .FirstOrDefaultAsync(m => m.Id.Equals(id));
 
             if (vehicle == null) return NotFound();
 
-            return View(vehicle);
+            AddVehicleViewModel addVehicleViewModel = new()
+            {
+                CreationDate = DateTime.Now,
+                Name = vehicle.Name,
+                Owner = vehicle.Owner,
+                NumberPlate = vehicle.NumberPlate,
+                Service = vehicle.Service,
+                DeliveryDate = null
+            };
+
+            return View(addVehicleViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, Vehicle vehicle)
+        public async Task<IActionResult> Edit(Guid id, AddVehicleViewModel addVehicleViewModel)
         {
-            if (id != vehicle.Id) return NotFound();
+            if (id != addVehicleViewModel.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
                 try
                 {
+                    Vehicle vehicle = new()
+                    {
+                        CreationDate = DateTime.Now,
+                        Name = addVehicleViewModel.Name,
+                        Owner = addVehicleViewModel.Owner,
+                        NumberPlate = addVehicleViewModel.NumberPlate,
+                        Service = addVehicleViewModel.Service,
+                        DeliveryDate = null
+                    };
                     _context.Update(vehicle);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
@@ -122,7 +152,8 @@ namespace WashingCar.Controllers
                     ModelState.AddModelError(string.Empty, ex.Message);
                 }
             }
-            return View(vehicle);
+            addVehicleViewModel.Services = await _dropDownListHelper.GetDDLServicesAsync();
+            return View(addVehicleViewModel);
         }
 
         // GET: Vehicles/Delete/5
@@ -131,6 +162,7 @@ namespace WashingCar.Controllers
             if (id == null || _context.Vehicles == null) return NotFound();
 
             var vehicle = await _context.Vehicles
+                .Include(v => v.Service)
                 .FirstOrDefaultAsync(v => v.Id.Equals(id));
 
             if (vehicle == null) return NotFound();

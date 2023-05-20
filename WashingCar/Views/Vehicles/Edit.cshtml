@@ -1,4 +1,4 @@
-﻿@model WashingCar.DAL.Entities.Vehicle
+﻿@model WashingCar.Models.AddVehicleViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -14,21 +14,8 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
 
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Owner" class="control-label"></label>
-                <input asp-for="Owner" class="form-control" />
-                <span asp-validation-for="Owner" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NumberPlate" class="control-label"></label>
-                <input asp-for="NumberPlate" class="form-control" />
-                <span asp-validation-for="NumberPlate" class="text-danger"></span>
-            </div>
+            <partial name="../Shared/PartialViews/_VehicleEditCreate" />
+            <br />
             <div class="form-group">
                 <input type="submit" value="Guardar" class="btn btn-primary" />
                 <a asp-action="Index" class="btn btn-outline-success">Regresar</a>

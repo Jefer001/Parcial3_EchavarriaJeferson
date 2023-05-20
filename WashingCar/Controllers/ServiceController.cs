@@ -243,6 +243,7 @@ namespace WashingCar.Controllers
                         Name = vehicleViewModel.Name,
                         Owner = vehicleViewModel.Owner,
                         NumberPlate = vehicleViewModel.NumberPlate,
+                        Service = vehicleViewModel.Service,
                         CreationDate = vehicleViewModel.CreationDate,
                         DeliveryDate = DateTime.Now
                     };
